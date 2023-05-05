@@ -43,7 +43,7 @@ public class ProfileController {
 	
 	@GetMapping("/getprofile/{id}")
 	Profile getProfileById(@PathVariable Long id) {
-		return profileRepo.findById(id).orElseThrow(()->new UserNotFoundException(id));
+		return profileRepo.findById(id).orElseThrow(()->new UserNotFoundException());
 	}  
 	
 	
@@ -58,14 +58,14 @@ public class ProfileController {
 					profile.setInstaUserId(newProfile.getInstaUserId());
 					
 					return profileRepo.save(profile);
-				}).orElseThrow(()->new UserNotFoundException(id));
+				}).orElseThrow(()->new UserNotFoundException());
 	}
 	
 	
 	@DeleteMapping("/deleteprofile/{id}")
 	String deleteUser(@PathVariable Long id) {
 		if(!profileRepo.existsById(id)) {
-			throw new UserNotFoundException(id);
+			throw new UserNotFoundException();
 		}
 		profileRepo.deleteById(id);
 		return "User With id "+ id +" has been deleted"; 

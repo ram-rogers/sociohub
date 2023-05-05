@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 
 @Entity
 public class Post {
@@ -14,6 +15,7 @@ public class Post {
     @GeneratedValue()
 	private Integer postId;
 	private String userId;
+	@Lob
 	private Blob image;
 	private Date date = new Date();
 	
