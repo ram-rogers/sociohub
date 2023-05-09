@@ -17,7 +17,13 @@ public class User {
 	private String email;
 	private String phno;  
 	private String password;
+	
 //	private Date date = new Date();
+	
+	
+	
+	
+	
 	public Long getId() {
 		return id;
 	}

@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ram.sociohub.entity.Post;
+import com.ram.sociohub.entity.User;
 import com.ram.sociohub.service.PostService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,7 +32,7 @@ public class PostController {
     @GetMapping("/post/ping")
     @ResponseBody
     public String hello_world(){
-        return "Hello Picture!";
+        return "upload success";
     }
 
     // display image
@@ -45,7 +46,7 @@ public class PostController {
     }
 
     // view All images
-    @GetMapping("/")
+    @GetMapping("/viewallimg")
     public ModelAndView home(){
         ModelAndView mv = new ModelAndView("index");
         List<Post> imageList = postService.viewAll();
@@ -54,21 +55,16 @@ public class PostController {
     }
 
     // add image - get
-    @GetMapping("/addimg")
+    @GetMapping("/getimg")
     public ModelAndView addImage(){
         return new ModelAndView("addimage");
     }
 
     // add image - post
     @PostMapping("/addimg")
-    public String addImagePost(HttpServletRequest request,@RequestParam("image") MultipartFile file) throws IOException, SerialException, SQLException
+    public String addImagePost(HttpServletRequest request,@RequestParam("image") MultipartFile file,Long userId) throws Exception 
     {
-        byte[] bytes = file.getBytes();
-        Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
-
-        Post post = new Post();
-        post.setImage(blob);
-        postService.create(post);
-        return "redirect:/";
+        postService.addImagePost(request, file,userId);
+        return "redirect:/post/ping";
     }
 }

@@ -23,10 +23,10 @@ public class ProfileService {
 	}
 	
 	
-	public List<Profile> getAllProfile(){
+	public List<Profile> getAllProfile() throws ProfileNotFoundException{
 		List<Profile> profileList = profileRepo.findAll();
 		return profileList;
-		
+		  
 	}
 	
 	
