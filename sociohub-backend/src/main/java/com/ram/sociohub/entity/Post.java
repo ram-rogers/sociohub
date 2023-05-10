@@ -1,6 +1,7 @@
 package com.ram.sociohub.entity;
 
 import java.sql.Blob;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import org.hibernate.annotations.ManyToAny;
@@ -13,49 +14,29 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 public class Post {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer postId;
+	private Long postId;
 	
 	@ManyToOne
 	@JoinColumn(name="uid")
 	private User user;
-	@Lob
-	private Blob image;
-	private Date date = new Date();
 	
 	
 	
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
+	private String image;
+	private String description;
+	private int likes;
+	private Timestamp dateTime;
 	
 	
+	       
 	
-	
-	public Integer getPostId() {
-		return postId;
-	}
-	public void setPostId(Integer postId) {
-		this.postId = postId;
-	}
-	
-	public Blob getImage() {
-		return image;
-	}
-	public void setImage(Blob image) {
-		this.image = image;
-	}
-	public Date getDate() {
-		return date;
-	}
-	public void setDate(Date date) {
-		this.date = date;
-	}
 }

@@ -11,10 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,47 +29,43 @@ import com.ram.sociohub.service.PostService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-@Controller
+
+
+@RestController
+@RequestMapping("/post")
 public class PostController {
     @Autowired
     private PostService postService;
 
-    @GetMapping("/post/ping")
+    @GetMapping("/ping")
     @ResponseBody
     public String hello_world(){
-        return "upload success";
+        return "Hello World";
     }
-
-    // display image
-    @GetMapping("/display")
-    public ResponseEntity<byte[]> displayImage(@RequestParam("id") long id) throws IOException, SQLException
-    {
-        Post post = postService.viewById(id);
-        byte [] imageBytes = null;
-        imageBytes = post.getImage().getBytes(1,(int) post.getImage().length());
-        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
-    }
-
-    // view All images
-    @GetMapping("/viewallimg")
-    public ModelAndView home(){
-        ModelAndView mv = new ModelAndView("index");
-        List<Post> imageList = postService.viewAll();
-        mv.addObject("imageList", imageList);
-        return mv;
-    }
-
-    // add image - get
-    @GetMapping("/getimg")
-    public ModelAndView addImage(){
-        return new ModelAndView("addimage");
-    }
-
-    // add image - post
+    
+           
     @PostMapping("/addimg")
-    public String addImagePost(HttpServletRequest request,@RequestParam("image") MultipartFile file,Long userId) throws Exception 
-    {
-        postService.addImagePost(request, file,userId);
-        return "redirect:/post/ping";
+    public Post newPost(@RequestBody Post post) {
+    	post = postService.uploadPost(post);
+    	return post;
     }
+    
+    @GetMapping(value="/getallpost")
+	public List<Post> getAllUser(){
+		return postService.getAllPosts();
+	}
+    
+    
+    @GetMapping(value="/getpostbyid/{id}")
+	public Post getUserById(@PathVariable Long id) throws Exception{
+		return postService.getPostById(id);
+	}
+    
+    @DeleteMapping("/deleteuserbyid/{id}")
+	public List<Post> deletePostById(@PathVariable("id") Long id) {
+		List<Post> post = postService.deletePostByIdAndReturnList(id);
+		return post;
+	}
+    
+    
 }

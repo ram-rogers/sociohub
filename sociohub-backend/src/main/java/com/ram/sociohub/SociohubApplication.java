@@ -10,4 +10,4 @@ public class SociohubApplication {
 		SpringApplication.run(SociohubApplication.class, args);
 	}
 
-}
+}  
