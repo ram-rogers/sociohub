@@ -1,9 +1,3 @@
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
 .nav-search {
     height: 40px;
     width: 220px;
@@ -54,3 +48,10 @@
 .logout {
     margin-right: 10px;
 }
+
+/* .nav-tabs {
+    background-color: #6B5DCC;
+    padding: 5px;
+    border-radius: 50%;
+
+} */
