@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,12 +21,19 @@ import com.ram.sociohub.repository.ProfileRepository;
 import com.ram.sociohub.service.ProfileService;
 
 @RestController
+@CrossOrigin("http://localhost:3000")
 public class ProfileController {
 
 	
-	@Autowired
+	
 	private ProfileService profileService;
 	
+	@Autowired
+    public ProfileController(ProfileService profileService) {
+        this.profileService = profileService;
+    }
+	
+
 	@GetMapping("/profile/hello")
     @ResponseBody
     public String hello_world(){
@@ -38,7 +46,7 @@ public class ProfileController {
 		profile = profileService.addProfile(profile);
 		return profile;
 	}
-	
+	   
 	@GetMapping(value="/getallprofile")
 	public List<Profile> getAllProfile(){
 		return profileService.getAllProfile();
@@ -56,6 +64,7 @@ public class ProfileController {
 	
 	
 	
+	  
 	@PutMapping("/updateprofilebyid/{id}")
 	public ResponseEntity<Profile> updateProfileById(@PathVariable("id") Long profileId,@RequestBody Profile updatedProfile) throws UserNotFoundException{
 		Profile profile = profileService.updateStudentById(profileId, updatedProfile);

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './Navbar.css';
 import photogram from "../../images/photogram.png"
 import { Avatar } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 
 class Navbar extends Component {
@@ -9,7 +10,7 @@ class Navbar extends Component {
 
     render() {
         return (
-            <div>
+            <div className='full-nav'>
                 <div className="row nav-main ">
                     <div className="col-2">
                         <div className="nav-left">
@@ -22,20 +23,20 @@ class Navbar extends Component {
 
                     <div className="col-7 nav-icons">
                         <div className="nav-tabs">
-                            <i class="fa-solid fa-house active icons fa-lg "  ></i>
+                            <Link to="/" class="fa fa-house fa-lg icons" />
 
                         </div>
 
                         <div className="nav-tabs ">
-                            <i class="fa-solid fa-magnifying-glass icons fa-lg"></i>
+                            <Link class="fa-solid fa-magnifying-glass fa-lg icons" />
                         </div>
 
                         <div className="nav-tabs">
-                            <i class="fa fa-user-circle icons fa-lg" aria-hidden="true"></i>
+                            <Link to="/profile" class="fa fa-user-circle icons fa-lg" aria-hidden="true" />
                         </div>
 
                         <div className="nav-tabs">
-                            <i class="fa-solid fa-circle-info icons fa-lg"></i>
+                            <Link class="fa-solid fa-circle-info icons fa-lg" />
                         </div>
 
 

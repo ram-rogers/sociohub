@@ -1,14 +1,19 @@
 package com.ram.sociohub.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ram.sociohub.entity.Post;
 import com.ram.sociohub.entity.User;
@@ -27,20 +32,63 @@ public class PostService {
 	
 //	User user = new User();
 	
-	public Post uploadPost(Post post){
-		log.info("uploadPost method() starts ");
+//	public Post uploadPost(Post post){
+//		log.info("uploadPost method() starts ");
+//
+//		Date date = new Date();
+//		long time = date.getTime();
+//		Timestamp dateTime = new Timestamp(time);
+//		
+//		
+//		post.setDateTime(dateTime);
+//		post.setLikes(0);
+//		
+//		log.info("The Post has been uploaded to the database");
+//		log.info("uploadPost method() ends ");
+//		return postRepository.save(post);		
+//	}
+	
+	public Post uploadImage(@RequestParam("file") MultipartFile file, @RequestParam("title") String desc) {
+		
+		if(!file.isEmpty()) {
+			try {
+				String fileName = UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
+				
+				Post post = new Post();
+				
+				post.setImage(fileName);
+				post.setDescription(desc);
+				log.info("uploadPost method() starts ");
 
-		Date date = new Date();
-		long time = date.getTime();
-		Timestamp dateTime = new Timestamp(time);
+				Date date = new Date();
+				long time = date.getTime();
+				Timestamp dateTime = new Timestamp(time);
+				
+				
+				post.setDateTime(dateTime);       
+				post.setLikes(0);
+				
+				log.info("The Post has been uploaded to the database");
+				log.info("uploadPost method() ends ");
+				
+				
+				
+				
+				String filePath = "C://springimg/" + fileName;
+				file.transferTo(new File(filePath));
+				
+				return postRepository.save(post);
+//				return "Image Upload success";
+			}
+			catch (IOException e) {
+                e.printStackTrace();
+//                return "Upload failed";
+            }
+			
+		}
+//		return "No file selected";
+		return null;
 		
-		
-		post.setDateTime(dateTime);
-		post.setLikes(0);
-		
-		log.info("The Post has been uploaded to the database");
-		log.info("uploadPost method() ends ");
-		return postRepository.save(post);		
 	}
 	
 	public List<Post> getAllPosts(){

@@ -19,7 +19,7 @@ public class ProfileService {
 	private final Logger log = LoggerFactory.getLogger(UserService.class); 
 
 	@Autowired
-	ProfileRepository profileRepo;
+	ProfileRepository profileRepo;  
 	
 	public Profile addProfile(Profile addprofile) {
 		log.info("addProfile method() starts ");
@@ -74,6 +74,7 @@ public class ProfileService {
 		}
 		return profile;
 	}
+	
 	
 	
 	@Transactional
