@@ -8,7 +8,9 @@ import Profile from './Component/Profile/Profile';
 import Login from './Component/Login/Login';
 import Signup from './Component/Signup/Signup';
 import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import EditProfile from './Component/Profile/EditProfile';
+import ViewUser from './Component/ViewUser/ViewUser';
 
 
 function App() {
@@ -19,12 +21,13 @@ function App() {
 				<ToastContainer />
 
 				<Routes>
+					<Route exact path="/" element={<><Navbar /><Upload /><Layout /></>} />
 					<Route exact path="/login" element={<Login />} />
 					<Route exact path="/signup" element={<Signup />} />
-					<Route exact path="/" element={<><Navbar /><Upload /><Layout /></>} />
 					<Route exact path="/upload" element={<Upload />} />
-					<Route exact path="/profile" element={<Profile />} />
-					{/* <Route path="/" element={((<Upload />), (<Layout />))} /> */}
+					<Route exact path="/viewusers" element={<><Navbar /><ViewUser /></>} />
+					<Route exact path="/profile" element={<><Navbar /><Profile /></>} />
+					<Route exact path="/editprofile" element={<EditProfile />} />
 				</Routes>
 
 

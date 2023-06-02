@@ -1,5 +1,6 @@
 package com.ram.sociohub.Controller;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,15 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ram.sociohub.entity.Profile;
 import com.ram.sociohub.exception.ProfileNotFoundException;
 import com.ram.sociohub.exception.UserNotFoundException;
-import com.ram.sociohub.repository.ProfileRepository;
+import com.ram.sociohub.modal.ProfileModal;
 import com.ram.sociohub.service.ProfileService;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
 public class ProfileController {
 
-	
-	
 	private ProfileService profileService;
 	
 	@Autowired
@@ -42,26 +41,39 @@ public class ProfileController {
 	
 	
 	@PostMapping("/addprofile")
-	public Profile newProfile(@RequestBody Profile profile) {
-		profile = profileService.addProfile(profile);
-		return profile;
+	public ProfileModal addProfile(@RequestBody Profile profile) {
+		ProfileModal proModel = profileService.addProfile(profile);
+		return proModel;
 	}
+	
+//	@PostMapping("/addprofile")
+//    public String addProfile(@RequestParam("fullname") String fullname,@RequestParam("bio") String bio,@RequestParam("about") String about,@RequestParam("city") String city,@RequestParam("insta") String insta,@RequestParam("user_id") String user_id) throws Exception {
+//		profileService.addProfile(fullname, bio, about, city, insta,user_id);
+//		
+//        return "Profile update success";
+//    }
 	   
 	@GetMapping(value="/getallprofile")
 	public List<Profile> getAllProfile(){
 		return profileService.getAllProfile();
-	}
+	}   
 	
 	@GetMapping(value="/getprofilebyid/{id}")
-	public Profile getProfileById(@PathVariable Long id) throws ProfileNotFoundException{
-		return profileService.getProfileById(id);
+	public ProfileModal getProfileById(@PathVariable Long id) throws ProfileNotFoundException{
+		ProfileModal proModel = profileService.getProfileById(id);
+		return proModel;
+	}
+	
+	@GetMapping("/getprofilebyuserid/{userId}")
+	public List<Profile> getProfileByUserId(@PathVariable Long userId){
+		return profileService.getProfileByUserId(userId);
 	}
 	
 	@GetMapping(value="/getprofilebybio/{id}")
 	public Profile getProfileByBio(@PathVariable String bio) throws ProfileNotFoundException{
 		return profileService.getProfileByBio(bio);
 	}
-	
+	   
 	
 	
 	  

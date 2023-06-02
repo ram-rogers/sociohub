@@ -24,7 +24,7 @@ public class Post {
 	
 	
 	
-	private String image;
+	private String owner;
 	private String description;
 	private int likes;
 	private Timestamp dateTime;

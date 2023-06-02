@@ -1,97 +1,77 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import "./MainPage.css";
 import "../Navbar/Navbar.css"
+import axios from 'axios';
 
 
-class Layout extends Component {
-
-    render() {
-        return (
+export default function Layout() {
 
 
-
-            <div className='mp-container p-4'>
+    const [posts, setPost] = useState([]);
 
 
 
-                <div className="post-items mx-5 mb-5">
-                    <div className="row">
-                        <div class="col-4">
-                            <div class="card shadow-sm">
-                                <img src="https://filmfare.wwmindia.com/content/2021/jun/vijay41624255649.jpg" alt="" />
-                                <div class="card-body">
-                                    <p class="card-text">Description</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+    useEffect(() => {
+        loadPosts();
+    }, []);
+
+    const loadPosts = async () => {
+        const result = await axios.get("http://localhost:8080/getpost");
+        setPost(result.data);
+    }
+    console.log(posts.data);
+
+    return (
+
+        <div className='mp-container p-4'>
+
+            <div className="post-items mx-5 mb-5">
+                <div className="row">
+
+                    {
+                        posts.map((post, index) => (
+
+                            < div className="col-6 mb-3" >
+                                <div className="card card-size shadow-sm bg-dark text-light">
+
+                                    <div className="card-body">
+                                        <p className="card-text my-5">{post.description}</p>
+                                        <div className="d-flex justify-content-between align-items-center">
+                                            <div className="">
+                                                <button type="button" className="btn btn-sm btn-primary mx-2">  Like</button>
+                                                <button type="button" className="btn btn-sm btn-danger">  Dislike</button>
+
+                                            </div>
+                                            <small className="text-body-secondary">posted on {post.dateTime.slice(0, 10)} by {post.owner}</small>
+
                                         </div>
-                                        <small class="text-body-secondary">9 mins</small>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
 
-                        <div class="col-4 mb-5">
-                            <div class="card shadow-sm">
-                                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
-                                    role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                                    <title>Placeholder</title>
-                                    <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef"
-                                        dy=".3em">Thumbnail</text>
-                                </svg>
-                                <div class="card-body">
-                                    <p class="card-text">Description</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                        </div>
-                                        <small class="text-body-secondary">9 mins</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="col-4 mb-5">
-                            <div class="card shadow-sm">
-                                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
-                                    role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                                    <title>Placeholder</title>
-                                    <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef"
-                                        dy=".3em">Thumbnail</text>
-                                </svg>
-                                <div class="card-body">
-                                    <p class="card-text">Description</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                        </div>
-                                        <small class="text-body-secondary">9 mins</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        ))
+                    }
 
 
 
 
-                    </div>
 
 
 
 
                 </div>
+
+
+
+
             </div>
+        </div >
 
 
 
 
-        );
-    }
+    );
+
 }
 
-export default Layout;

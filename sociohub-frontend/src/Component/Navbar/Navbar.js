@@ -1,71 +1,109 @@
-import React, { Component } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Navbar.css';
+import defaultavatar from "../../images/defaultavatar.png"
 import photogram from "../../images/photogram.png"
+
 import { Avatar } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 
-class Navbar extends Component {
+export default function Navbar() {
+
+    const luname = localStorage.getItem("username");
+
+    let navigate = useNavigate();
 
 
-    render() {
-        return (
-            <div className='full-nav'>
-                <div className="row nav-main ">
-                    <div className="col-2">
-                        <div className="nav-left">
-                            <img className="nav-logo" src={photogram} width="35px" alt="" />
-                            {/* <p></p> */}
-                            {/* <input className='nav-search ' type="text" placeholder='Search...' /> */}
+    const [user, setUser] = useState({
 
-                        </div>
-                    </div>
-
-                    <div className="col-7 nav-icons">
-                        <div className="nav-tabs">
-                            <Link to="/" class="fa fa-house fa-lg icons" />
-
-                        </div>
-
-                        <div className="nav-tabs ">
-                            <Link class="fa-solid fa-magnifying-glass fa-lg icons" />
-                        </div>
-
-                        <div className="nav-tabs">
-                            <Link to="/profile" class="fa fa-user-circle icons fa-lg" aria-hidden="true" />
-                        </div>
-
-                        <div className="nav-tabs">
-                            <Link class="fa-solid fa-circle-info icons fa-lg" />
-                        </div>
+        id: "",
+        username: "",
+        email: "",
+        phno: ""
+    })
 
 
 
-                    </div>
-                    <div className="col-3 nav-right ">
-                        <div className="nav-righttab d-flex justify-content-between align-items-center pt-2">
-                            <div className="d-flex justify-content-between align-items-center">
-                                <div className="">
-                                    <Avatar className='' src='https://filmfare.wwmindia.com/content/2021/jun/vijay41624255649.jpg' />
-                                </div>
-                                <div className="profilename px-3">
-                                    Ram
-                                </div>
-                            </div>
-                            <div className="nav-tabs"><i class="fa-solid fa-plus fa-lg"></i></div>
-                            <div className=""><i class="fa-brands fa-rocketchat fa-lg"></i></div>
-
-                            <div className="logout">
-                                <button className='btn btn-danger logo'>Logout</button>
-                            </div>
+    useEffect(() => {
+        loadUser()
+    }, [])
 
 
+    const loadUser = async () => {
+        const result = await axios.get(`http://localhost:8080/getuserbyusername/${luname}`)
+        setUser(result.data)
+    }
 
-                        </div>
+    console.log(user.id)
+    const userId = Number(user.id)
+    localStorage.setItem("userId", userId);
+
+
+    function logout() {
+        localStorage.removeItem("username");
+        localStorage.removeItem("userId")
+        navigate("/login")
+        toast.success("User has successfully logged out")
+    }
+
+
+
+
+    return (
+        <div className='full-nav'>
+            <div className="row nav-main ">
+                <div className="col-2">
+                    <div className="nav-left">
+                        <img className="nav-logo" src={photogram} width="35px" alt="" />
+                        {/* <p></p> */}
+                        {/* <input className='nav-search ' type="text" placeholder='Search...' /> */}
+
                     </div>
                 </div>
-            </div >);
-    }
-}
 
-export default Navbar;
+                <div className="col-7 nav-icons">
+                    <div className="nav-tabs">
+                        <Link to="/" className="fa fa-house fa-lg icons" />
+
+                    </div>
+
+                    <div className="nav-tabs ">
+                        <Link to="/viewusers" className="fa-solid fa-users fa-lg icons" />
+                    </div>
+
+                    <div className="nav-tabs">
+                        <Link to="/profile" className="fa fa-user-circle icons fa-lg" aria-hidden="true" />
+                    </div>
+
+                    <div className="nav-tabs">
+                        <Link className="fa-solid fa-circle-info icons fa-lg" />
+                    </div>
+
+
+
+                </div>
+                <div className="col-3 nav-right ">
+                    <div className="nav-righttab d-flex justify-content-between align-items-center pt-2">
+                        <div className="d-flex justify-content-between align-items-center">
+                            <div className="">
+                                <Avatar className='' src={defaultavatar} />
+                            </div>
+                            <div className="profilename px-3 text-light">
+                                {user.username}
+
+                            </div>
+                        </div>
+
+                        <div className="logout">
+                            <button onClick={logout} className='btn btn-danger logo'>Logout</button>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div >);
+}

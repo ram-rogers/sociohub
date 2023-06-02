@@ -1,15 +1,23 @@
 package com.ram.sociohub.entity;
 
 import java.util.Date;
+import java.util.Optional;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Setter
+@Getter
+@ToString
 @Entity
 public class Profile {
 	@Id
@@ -17,62 +25,18 @@ public class Profile {
 	private Long id;
 	
 	private String bio;
-	private String avatar;
 	private String fullname;
-	private String dob;
-	
-	
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
+
+	private String about;
+	private String city;
 	private String instaUserId;
-	@OneToOne
-	@JoinColumn(name="uid")
+	
+	@ManyToOne
+	@JoinColumn(name="user_id")
 	private User user;
+
 	
-	
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public String getBio() {
-		return bio;
-	}
-	public void setBio(String bio) {
-		this.bio = bio;
-	}
-	public String getAvatar() {
-		return avatar;
-	}
-	public void setAvatar(String avatar) {
-		this.avatar = avatar;
-	}
-	public String getFullname() {
-		return fullname;
-	}
-	public void setFullname(String fullname) {
-		this.fullname = fullname;
-	}
-	
-	public String getDob() {
-		return dob;
-	}
-	public void setDob(String dob) {
-		this.dob = dob;
-	}
-	public String getInstaUserId() {
-		return instaUserId;
-	}
-	public void setInstaUserId(String instaUserId) {
-		this.instaUserId = instaUserId;
-	}
-	
-	
+	     
 	
 	
 }

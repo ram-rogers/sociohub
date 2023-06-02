@@ -1,6 +1,10 @@
 .mp-container {
     background-color: #EFF2F5;
     text-align: center;
-    height: 575px;
+    height: 90%;
     width: 100%;
+}
+
+.card-size {
+    width: 500px;
 }

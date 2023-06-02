@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ram.sociohub.entity.User;
 import com.ram.sociohub.exception.UserNotFoundException;
+import com.ram.sociohub.repository.UserRepository;
+import com.ram.sociohub.service.UserCredentials;
 import com.ram.sociohub.service.UserService;
 
 @RestController
@@ -24,6 +26,9 @@ public class UserController {
   
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	UserRepository userRepo;
 	
 	@GetMapping("/hello")
     @ResponseBody
@@ -45,6 +50,16 @@ public class UserController {
 	public User getUserByUsername(@PathVariable("username") String username) throws UserNotFoundException{
 		return userService.getUserByUsername(username);
 	}
+	
+	@PostMapping("/login")
+    public String login(@RequestBody UserCredentials userCredentials) {
+        User user = userRepo.findByUsernameAndPassword(userCredentials.getUsername(), userCredentials.getPassword());
+        if (user != null) {
+            return "Login successful!";
+        } else {
+            return "Invalid username or password.";
+        }
+    }
 	
 	@GetMapping(value="/getuserbyemail/{email}")
 	public List<User> getUserByEmail(@PathVariable("email") String email) throws UserNotFoundException{

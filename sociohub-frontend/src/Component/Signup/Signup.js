@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import photogram from "../../images/photogram.png"
 import { signup } from '../../services/UserService';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Signup() {
 
@@ -81,7 +81,10 @@ export default function Signup() {
                     </div>
 
 
-                    <button className="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
+                    <button className="w-100 btn btn-lg btn-primary mb-4" type="submit">Sign up</button>
+
+                    <Link to="/login">Already have an acount click here</Link>
+
                 </form>
             </main>
         </div>

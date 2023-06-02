@@ -3,7 +3,6 @@ package com.ram.sociohub.service;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ram.sociohub.entity.Post;
-import com.ram.sociohub.entity.User;
 import com.ram.sociohub.repository.PostRepository;
 
 import jakarta.transaction.Transactional;
@@ -30,24 +28,6 @@ public class PostService {
 	private final Logger log = LoggerFactory.getLogger(UserService.class); 
 
 	
-//	User user = new User();
-	
-//	public Post uploadPost(Post post){
-//		log.info("uploadPost method() starts ");
-//
-//		Date date = new Date();
-//		long time = date.getTime();
-//		Timestamp dateTime = new Timestamp(time);
-//		
-//		
-//		post.setDateTime(dateTime);
-//		post.setLikes(0);
-//		
-//		log.info("The Post has been uploaded to the database");
-//		log.info("uploadPost method() ends ");
-//		return postRepository.save(post);		
-//	}
-	
 	public Post uploadImage(@RequestParam("file") MultipartFile file, @RequestParam("title") String desc) {
 		
 		if(!file.isEmpty()) {
@@ -56,7 +36,7 @@ public class PostService {
 				
 				Post post = new Post();
 				
-				post.setImage(fileName);
+				post.setOwner(fileName);
 				post.setDescription(desc);
 				log.info("uploadPost method() starts ");
 

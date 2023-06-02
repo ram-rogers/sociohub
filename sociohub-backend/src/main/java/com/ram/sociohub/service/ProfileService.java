@@ -1,6 +1,8 @@
 package com.ram.sociohub.service;
 
+
 import java.util.List;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 import com.ram.sociohub.entity.Profile;
 import com.ram.sociohub.exception.ProfileNotFoundException;
+import com.ram.sociohub.modal.ProfileModal;
 import com.ram.sociohub.repository.ProfileRepository;
+import com.ram.sociohub.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -17,16 +21,67 @@ import jakarta.transaction.Transactional;
 public class ProfileService {
 
 	private final Logger log = LoggerFactory.getLogger(UserService.class); 
+	
 
 	@Autowired
-	ProfileRepository profileRepo;  
+	public ProfileRepository profileRepo;  
+	  
+	@Autowired
+	public UserRepository userRepo;
 	
-	public Profile addProfile(Profile addprofile) {
+
+	
+	
+	
+	public ProfileModal addProfile(Profile addprofile) {
 		log.info("addProfile method() starts ");
-		log.info("The Profile {} has been added.",addprofile);
 		log.info("addProfile method() ends ");
-		return profileRepo.save(addprofile);
+		Profile pro = profileRepo.save(addprofile);
+		log.info("The Profile {} has been added.",addprofile);
+		ProfileModal proModal = new ProfileModal();
+		proModal.setId(pro.getId());
+		proModal.setFullname(pro.getFullname());
+		proModal.setAbout(pro.getAbout());
+		proModal.setBio(pro.getBio());
+		proModal.setCity(pro.getCity());
+		proModal.setInstaUserId(pro.getInstaUserId());
+//		proModal.setUserId(pro.getUser().getId());
+
+		return proModal;
+		
+		  
 	}
+	
+	
+	
+	
+//	public ProfileModal addProfile(String fullname,String bio,String about,String city,String insta,String user_id) throws IllegalStateException, IOException {
+//		
+//			long uid=Long.parseLong(user_id);  
+//			System.err.println(uid);
+//			
+//		
+//            // Generate a unique filename for the image
+//
+//            Profile pro = new Profile();
+//            
+//            ProfileModal profile = new ProfileModal();
+//            profile.setAbout(about);
+//            profile.setBio(bio);
+//            profile.setUserId(uid);
+//       
+//            profile.setFullname(fullname);
+//            profile.setCity(city);
+//            
+//			log.info("uploadPost method() starts ");
+//
+//
+//            profileRepo.save(profile);
+//			return profile;
+//         
+//		
+//		
+//	}
 	
 	
 	public List<Profile> getAllProfile() throws ProfileNotFoundException{
@@ -38,16 +93,30 @@ public class ProfileService {
 		  
 	}
 	
+	public List<Profile> getProfileByUserId(Long userId){
+		return profileRepo.findByUserId(userId);
+		
+	}   
 	
-	public Profile getProfileById(Long id) throws ProfileNotFoundException{
+	
+	public ProfileModal getProfileById(Long id) throws ProfileNotFoundException{
 		log.info("getProfileById method() starts ");
-		Profile profile = profileRepo.findById(id).orElse(null);
-		if(profile == null) {
+		Profile pro = profileRepo.findById(id).orElse(null);
+		if(pro == null) {
 			throw new ProfileNotFoundException();
 		}
 		log.info("The Profile {} has been retrieved .",id);
 		log.info("getProfileById method() ends ");
-		return profile;
+		ProfileModal proModal = new ProfileModal();
+		proModal.setId(pro.getId());
+		proModal.setFullname(pro.getFullname());
+		proModal.setAbout(pro.getAbout());
+		proModal.setBio(pro.getBio());
+		proModal.setCity(pro.getCity());
+		proModal.setInstaUserId(pro.getInstaUserId());
+		proModal.setUserId(pro.getUser().getId());
+		return proModal;
+		
 	}  
 	
 	public Profile getUserByFullname(String fullname) throws ProfileNotFoundException{
@@ -97,8 +166,6 @@ public class ProfileService {
 		}
 		
 		existingProfile.setBio(updateProfile.getBio());
-		existingProfile.setAvatar(updateProfile.getAvatar());
-		existingProfile.setDob(updateProfile.getDob());
 		existingProfile.setFullname(updateProfile.getFullname());
 		existingProfile.setInstaUserId(updateProfile.getInstaUserId());
 		log.info("The Profile {} has been updated.",updateProfile);
