@@ -1,53 +1,44 @@
+# 🐦 Tweet App  
+A lightweight social media application that allows users to post tweets, view a real-time feed, manage profiles, and interact with other users.  
+Built with a **React frontend** and a **Spring Boot backend**, following clean API architecture and modern UI principles.
 
 ---
 
-# 🐦 **2. Tweet App — README.md**
+## 🚀 Features
 
-```md
-# Tweet App  
-A full-stack social media application where users can create tweets, follow profiles, and interact via a real-time feed.  
-Built using **React**, **Spring Boot**, and **MySQL**.
+### 🌟 Core Functionality
+- Post, edit, and delete tweets  
+- View a dynamic home feed  
+- Like / Unlike tweets  
+- View user-specific tweet lists  
 
----
+### 👤 User & Profile
+- Sign up / Login using JWT authentication  
+- Profile page with user details & tweet history  
+- Follow / Unfollow users  
+- Personalized feed based on following  
 
-## ✨ Features
-
-### 🔐 Authentication
-- Secure JWT-based login and signup  
-- Password hashing  
-- Session validation
-
-### 📝 Tweet System
-- Create, edit, delete tweets  
-- View dynamic tweet feed  
-- Like / unlike functionality
-
-### 👤 User Profiles
-- Profile info (name, bio, joined date)  
-- View all tweets of a user  
-- Follow / unfollow functionality
-
-### ⚡ Real-Time Feel
-- Auto-refresh feed  
-- Smooth UI rendering  
-- Efficient API design
+### ⚙️ Technical Highlights
+- Fully decoupled frontend + backend  
+- REST API with clean controller/service layers  
+- JWT-secured endpoints  
+- Optimized UI rendering using React hooks  
+- Responsive layout with Tailwind CSS  
 
 ---
 
-## 🚀 Tech Stack
+## 🧰 Tech Stack
 
 ### **Frontend**
 - React  
-- React Hooks  
+- React Router  
 - Axios  
-- Tailwind CSS
+- Tailwind CSS  
 
 ### **Backend**
 - Spring Boot  
 - Spring Security (JWT)  
 - MySQL  
-- JPA / Hibernate
+- JPA / Hibernate  
 
 ---
-
-## 📁 Project Structure
